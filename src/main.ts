@@ -1,4 +1,4 @@
-import { Plugin, ItemView, WorkspaceLeaf } from "obsidian";
+import { Plugin, WorkspaceLeaf } from "obsidian";
 import { VIEW_TYPE_ZINCCHIRP } from "./util";
 import { ZincchirpView } from "./view";
 
