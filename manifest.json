@@ -1,0 +1,9 @@
+{
+  "id": "zincchirp",
+  "name": "Zincchirp",
+  "version": "0.1.0",
+  "minAppVersion": "0.15.0",
+  "description": "Post short notes to the end of today's daily note.",
+  "author": "hnagamin95",
+  "isDesktopOnly": true
+}
