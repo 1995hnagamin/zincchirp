@@ -2,14 +2,25 @@ import { Plugin, WorkspaceLeaf } from "obsidian";
 import { VIEW_TYPE_ZINCCHIRP } from "./util";
 import { ZincchirpView } from "./view";
 import { ZincchirpModel } from "./model";
+import {
+  ZincchirpSettings,
+  DEFAULT_SETTINGS,
+  ZincchirpSettingTab,
+} from "./settings";
 
 export default class Zincchirp extends Plugin {
+  settings!: ZincchirpSettings;
+
   async onload() {
-    const model = new ZincchirpModel(this.app);
+    await this.loadSettings();
+
+    const model = new ZincchirpModel(this.app, this);
     this.registerView(
       VIEW_TYPE_ZINCCHIRP,
       (leaf) => new ZincchirpView(leaf, model),
     );
+
+    this.addSettingTab(new ZincchirpSettingTab(this.app, this));
 
     this.addCommand({
       id: "open-zincchirp-view",
@@ -21,6 +32,18 @@ export default class Zincchirp extends Plugin {
   }
 
   onunload() {}
+
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
+
+  async loadSettings() {
+    this.settings = Object.assign(
+      {},
+      DEFAULT_SETTINGS,
+      (await this.loadData()) as Partial<ZincchirpSettings>,
+    );
+  }
 
   async activateView() {
     const { workspace } = this.app;
