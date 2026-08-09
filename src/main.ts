@@ -1,5 +1,4 @@
 import {
-    Notice,
     Plugin,
     ItemView,
     WorkspaceLeaf
@@ -12,10 +11,13 @@ export default class Zincchirp extends Plugin {
             (leaf) => new ZincchirpView(leaf)
         );
 
-        this.addRibbonIcon('dice', 'Activate view', () => {
-            this.activateView();
+        this.addCommand({
+            id: 'open-zincchirp-view',
+            name: 'Open Zincchirp panel',
+            callback: () => {
+                this.activateView();
+            }
         });
-
     }
 
     onunload() {
