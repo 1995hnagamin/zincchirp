@@ -1,4 +1,4 @@
-import { ItemView, WorkspaceLeaf } from "obsidian";
+import { ItemView, Notice, WorkspaceLeaf } from "obsidian";
 import { VIEW_TYPE_ZINCCHIRP } from "./util";
 
 export class ZincchirpView extends ItemView {
@@ -18,5 +18,14 @@ export class ZincchirpView extends ItemView {
     const container = this.contentEl;
     container.empty();
     container.createEl("h4", { text: "Hello World" });
+
+    const wrapper = container.createDiv();
+    const textarea = wrapper.createEl("textarea");
+    textarea.style.width = "100%";
+    const button = wrapper.createEl("button", { text: "Post" });
+
+    button.addEventListener("click", () => {
+      new Notice(textarea.value);
+    });
   }
 }
