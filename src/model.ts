@@ -8,7 +8,7 @@ export class ZincchirpModel {
     this.theday = moment().startOf("day");
   }
 
-  private async getJournalFile(): Promise<TFile> {
+  private async getOrCreateJournalFile(): Promise<TFile> {
     const path = `chrono/${this.theday.format("YYYY/MM/YYYY-MM-DD")}.md`;
     const existing = this.app.vault.getAbstractFileByPath(path);
 
@@ -21,7 +21,7 @@ export class ZincchirpModel {
 
   async post(text: string): Promise<void> {
     const now = moment();
-    const file = await this.getJournalFile();
+    const file = await this.getOrCreateJournalFile();
     const timestamp = this.formatTimestamp(now);
     await this.app.vault.append(file, `\n- ${timestamp} ${text}`);
   }
