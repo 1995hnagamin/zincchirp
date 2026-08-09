@@ -32,6 +32,7 @@ export class ZincchirpView extends ItemView {
       const message = textarea.value;
       this.model.post(message);
       textarea.value = "";
+      textarea.focus();
     });
   }
 }
