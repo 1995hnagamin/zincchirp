@@ -3,8 +3,6 @@ import { VIEW_TYPE_ZINCCHIRP } from "./util";
 import { ZincchirpModel } from "./model";
 
 export class ZincchirpView extends ItemView {
-  private dateEl?: HTMLElement;
-
   constructor(
     leaf: WorkspaceLeaf,
     private model: ZincchirpModel,
@@ -21,7 +19,7 @@ export class ZincchirpView extends ItemView {
   }
 
   render() {
-    this.dateEl?.setText(this.model.getDayString());
+    // do nothing
   }
 
   async onOpen() {
@@ -42,20 +40,11 @@ export class ZincchirpView extends ItemView {
     });
 
     container.createEl("hr");
-    this.dateEl = container.createEl("div");
-    this.render();
-    const refresher = container.createEl("button", { text: "Today" });
-    refresher.addEventListener("click", () => {
-      this.model.refresh();
-      this.render();
-    });
 
     const dateInput = container.createEl("input", { type: "date" });
     dateInput.value = this.model.getDayString();
-
     dateInput.addEventListener("change", () => {
       this.model.setDayFromString(dateInput.value);
-      this.render();
     });
   }
 }
