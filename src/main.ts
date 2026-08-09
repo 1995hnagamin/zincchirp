@@ -1,10 +1,15 @@
 import { Plugin, WorkspaceLeaf } from "obsidian";
 import { VIEW_TYPE_ZINCCHIRP } from "./util";
 import { ZincchirpView } from "./view";
+import { ZincchirpModel } from "./model";
 
 export default class Zincchirp extends Plugin {
   async onload() {
-    this.registerView(VIEW_TYPE_ZINCCHIRP, (leaf) => new ZincchirpView(leaf));
+    const model = new ZincchirpModel(this.app);
+    this.registerView(
+      VIEW_TYPE_ZINCCHIRP,
+      (leaf) => new ZincchirpView(leaf, model),
+    );
 
     this.addCommand({
       id: "open-zincchirp-view",

@@ -1,8 +1,12 @@
 import { ItemView, Notice, WorkspaceLeaf } from "obsidian";
 import { VIEW_TYPE_ZINCCHIRP } from "./util";
+import { ZincchirpModel } from "./model";
 
 export class ZincchirpView extends ItemView {
-  constructor(leaf: WorkspaceLeaf) {
+  constructor(
+    leaf: WorkspaceLeaf,
+    private model: ZincchirpModel,
+  ) {
     super(leaf);
   }
 
@@ -25,9 +29,9 @@ export class ZincchirpView extends ItemView {
     const button = wrapper.createEl("button", { text: "Post" });
 
     button.addEventListener("click", () => {
-      const post = textarea.value;
+      const message = textarea.value;
+      this.model.post(message);
       textarea.value = "";
-      new Notice(post);
     });
   }
 }
