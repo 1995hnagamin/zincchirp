@@ -32,9 +32,9 @@ export class ZincchirpView extends ItemView {
     textarea.style.width = "100%";
     const button = wrapper.createEl("button", { text: "Post" });
 
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       const message = textarea.value;
-      this.model.post(message);
+      await this.model.post(message);
       textarea.value = "";
       textarea.focus();
     });
