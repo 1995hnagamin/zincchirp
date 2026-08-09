@@ -1,8 +1,10 @@
-import { ItemView, Notice, WorkspaceLeaf } from "obsidian";
+import { ItemView, WorkspaceLeaf } from "obsidian";
 import { VIEW_TYPE_ZINCCHIRP } from "./util";
 import { ZincchirpModel } from "./model";
 
 export class ZincchirpView extends ItemView {
+  private dateEl?: HTMLElement;
+
   constructor(
     leaf: WorkspaceLeaf,
     private model: ZincchirpModel,
@@ -16,6 +18,10 @@ export class ZincchirpView extends ItemView {
 
   getDisplayText(): string {
     return "Zincchirp";
+  }
+
+  render() {
+    this.dateEl?.setText(this.model.getDayString());
   }
 
   async onOpen() {
@@ -33,6 +39,15 @@ export class ZincchirpView extends ItemView {
       this.model.post(message);
       textarea.value = "";
       textarea.focus();
+    });
+
+    container.createEl("hr");
+    this.dateEl = container.createEl("div");
+    this.render();
+    const refresher = container.createEl("button", { text: "Today" });
+    refresher.addEventListener("click", () => {
+      this.model.refresh();
+      this.render();
     });
   }
 }

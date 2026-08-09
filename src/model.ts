@@ -19,6 +19,19 @@ export class ZincchirpModel {
     return await this.app.vault.create(path, "");
   }
 
+  private setDay(target: Moment): void {
+    this.theday = target.clone().startOf("day");
+  }
+
+  refresh(): void {
+    const now = moment();
+    this.setDay(now);
+  }
+
+  getDayString(): string {
+    return this.theday.format("YYYY-MM-DD");
+  }
+
   async post(text: string): Promise<void> {
     if (text === "") {
       return;
