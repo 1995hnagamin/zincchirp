@@ -10,12 +10,12 @@ export class ZincchirpView extends ItemView {
     super(leaf);
   }
 
-  getViewType() {
+  getViewType(): string {
     return VIEW_TYPE_ZINCCHIRP;
   }
 
-  getDisplayText() {
-    return "Hello World";
+  getDisplayText(): string {
+    return "Zincchirp";
   }
 
   async onOpen() {
