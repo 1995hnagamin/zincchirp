@@ -49,5 +49,13 @@ export class ZincchirpView extends ItemView {
       this.model.refresh();
       this.render();
     });
+
+    const dateInput = container.createEl("input", { type: "date" });
+    dateInput.value = this.model.getDayString();
+
+    dateInput.addEventListener("change", () => {
+      this.model.setDayFromString(dateInput.value);
+      this.render();
+    });
   }
 }

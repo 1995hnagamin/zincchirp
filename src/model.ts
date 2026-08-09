@@ -28,6 +28,11 @@ export class ZincchirpModel {
     this.theday = target.clone().startOf("day");
   }
 
+  setDayFromString(dateString: string): void {
+    const day = moment(dateString, "YYYY-MM-DD");
+    this.setDay(day);
+  }
+
   refresh(): void {
     const now = moment();
     this.setDay(now);
