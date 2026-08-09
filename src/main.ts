@@ -20,23 +20,24 @@ export default class Zincchirp extends Plugin {
   async activateView() {
     const { workspace } = this.app;
 
-    let leaf: WorkspaceLeaf | null = null;
-    const leaves = workspace.getLeavesOfType(VIEW_TYPE_ZINCCHIRP);
+    const leaf = await this.getOrCreateLeaf();
+    workspace.revealLeaf(leaf);
+  }
 
-    if (leaves.length > 0) {
-      // A leaf with our view already exists, use that
-      leaf = leaves[0] || null;
-    } else {
-      // Our view could not be found in the workspace, create a new leaf
-      // in the right sidebar for it
-      leaf = workspace.getRightLeaf(false);
-      await leaf?.setViewState({ type: VIEW_TYPE_ZINCCHIRP, active: true });
+  async getOrCreateLeaf(): Promise<WorkspaceLeaf> {
+    const { workspace } = this.app;
+
+    const existing = workspace.getLeavesOfType(VIEW_TYPE_ZINCCHIRP)[0];
+    if (existing != null) {
+      return existing;
     }
 
-    // "Reveal" the leaf in case it is in a collapsed sidebar
-    if (leaf) {
-      workspace.revealLeaf(leaf);
+    let leaf = workspace.getRightLeaf(false);
+    if (!leaf) {
+      throw new Error("Could not create a leaf in the right sidebar");
     }
+    await leaf.setViewState({ type: VIEW_TYPE_ZINCCHIRP, active: true });
+    return leaf;
   }
 }
 
