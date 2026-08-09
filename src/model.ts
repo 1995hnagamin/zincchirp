@@ -20,10 +20,14 @@ export class ZincchirpModel {
   }
 
   async post(text: string): Promise<void> {
+    if (text === "") {
+      return;
+    }
     const now = moment();
     const file = await this.getOrCreateJournalFile();
     const timestamp = this.formatTimestamp(now);
-    await this.app.vault.append(file, `\n- ${timestamp} ${text}`);
+    const formattedText = text.trim().split(/\n/).join("\n  ");
+    await this.app.vault.append(file, `\n- ${timestamp} ${formattedText}`);
   }
 
   private formatTimestamp(now: Moment): string {
