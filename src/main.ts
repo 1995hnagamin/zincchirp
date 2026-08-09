@@ -1,8 +1,10 @@
 import { Plugin, ItemView, WorkspaceLeaf } from "obsidian";
 
+export const VIEW_TYPE_ZINCCHIRP = "zincchirp-view";
+
 export default class Zincchirp extends Plugin {
   async onload() {
-    this.registerView("zincchirp-view", (leaf) => new ZincchirpView(leaf));
+    this.registerView(VIEW_TYPE_ZINCCHIRP, (leaf) => new ZincchirpView(leaf));
 
     this.addCommand({
       id: "open-zincchirp-view",
@@ -19,7 +21,7 @@ export default class Zincchirp extends Plugin {
     const { workspace } = this.app;
 
     let leaf: WorkspaceLeaf | null = null;
-    const leaves = workspace.getLeavesOfType("zincchirp-view");
+    const leaves = workspace.getLeavesOfType(VIEW_TYPE_ZINCCHIRP);
 
     if (leaves.length > 0) {
       // A leaf with our view already exists, use that
@@ -28,7 +30,7 @@ export default class Zincchirp extends Plugin {
       // Our view could not be found in the workspace, create a new leaf
       // in the right sidebar for it
       leaf = workspace.getRightLeaf(false);
-      await leaf?.setViewState({ type: "zincchirp-view", active: true });
+      await leaf?.setViewState({ type: VIEW_TYPE_ZINCCHIRP, active: true });
     }
 
     // "Reveal" the leaf in case it is in a collapsed sidebar
@@ -44,7 +46,7 @@ export class ZincchirpView extends ItemView {
   }
 
   getViewType() {
-    return "zincchirp-view";
+    return VIEW_TYPE_ZINCCHIRP;
   }
 
   getDisplayText() {
