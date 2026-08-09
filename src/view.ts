@@ -17,7 +17,7 @@ export class ZincchirpView extends ItemView {
   async onOpen() {
     const container = this.contentEl;
     container.empty();
-    container.createEl("h4", { text: "Hello World" });
+    container.createEl("h4", { text: "Zincchirp" });
 
     const wrapper = container.createDiv();
     const textarea = wrapper.createEl("textarea");
@@ -25,7 +25,9 @@ export class ZincchirpView extends ItemView {
     const button = wrapper.createEl("button", { text: "Post" });
 
     button.addEventListener("click", () => {
-      new Notice(textarea.value);
+      const post = textarea.value;
+      textarea.value = "";
+      new Notice(post);
     });
   }
 }
