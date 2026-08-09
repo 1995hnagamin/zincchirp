@@ -14,7 +14,7 @@ export default class Zincchirp extends Plugin {
   async onload() {
     await this.loadSettings();
 
-    const model = new ZincchirpModel(this.app, this);
+    const model = new ZincchirpModel(this.app, this.settings);
     this.registerView(
       VIEW_TYPE_ZINCCHIRP,
       (leaf) => new ZincchirpView(leaf, model),

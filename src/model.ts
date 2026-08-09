@@ -1,19 +1,19 @@
 import { App, TFile } from "obsidian";
 import moment, { Moment } from "moment";
-import Zincchirp from "./main";
+import { ZincchirpSettings } from "./settings";
 
 export class ZincchirpModel {
   private theday: Moment;
 
   constructor(
     private app: App,
-    private plugin: Zincchirp,
+    private settings: ZincchirpSettings,
   ) {
     this.theday = moment().startOf("day");
   }
 
   private async getOrCreateJournalFile(): Promise<TFile> {
-    const format = this.plugin.settings.JournalPathFormat;
+    const format = this.settings.JournalPathFormat;
     const path = this.theday.format(format);
     const existing = this.app.vault.getAbstractFileByPath(path);
 
