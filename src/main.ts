@@ -1,6 +1,6 @@
 import { Plugin, ItemView, WorkspaceLeaf } from "obsidian";
-
-export const VIEW_TYPE_ZINCCHIRP = "zincchirp-view";
+import { VIEW_TYPE_ZINCCHIRP } from "./util";
+import { ZincchirpView } from "./view";
 
 export default class Zincchirp extends Plugin {
   async onload() {
@@ -38,25 +38,5 @@ export default class Zincchirp extends Plugin {
     }
     await leaf.setViewState({ type: VIEW_TYPE_ZINCCHIRP, active: true });
     return leaf;
-  }
-}
-
-export class ZincchirpView extends ItemView {
-  constructor(leaf: WorkspaceLeaf) {
-    super(leaf);
-  }
-
-  getViewType() {
-    return VIEW_TYPE_ZINCCHIRP;
-  }
-
-  getDisplayText() {
-    return "Hello World";
-  }
-
-  async onOpen() {
-    const container = this.contentEl;
-    container.empty();
-    container.createEl("h4", { text: "Hello World" });
   }
 }
