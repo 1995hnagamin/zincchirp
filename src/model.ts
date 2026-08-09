@@ -13,8 +13,7 @@ export class ZincchirpModel {
   }
 
   private async getOrCreateJournalFile(): Promise<TFile> {
-    const format = this.settings.JournalPathFormat;
-    const path = this.theday.format(format);
+    const path = this.getPath();
     const existing = this.app.vault.getAbstractFileByPath(path);
 
     if (existing instanceof TFile) {
@@ -22,6 +21,12 @@ export class ZincchirpModel {
     }
 
     return await this.app.vault.create(path, "");
+  }
+
+  private getPath(): string {
+    const format = this.settings.JournalPathFormat;
+    const path = this.theday.format(format);
+    return path;
   }
 
   private setDay(target: Moment): void {
@@ -58,5 +63,14 @@ export class ZincchirpModel {
     const hh = String(hours).padStart(2, "0");
     const mm = now.format("mm");
     return `${hh}:${mm}`;
+  }
+
+  async openFile(): Promise<void> {
+    const path = this.getPath();
+    const file = this.app.vault.getAbstractFileByPath(path);
+    if (file instanceof TFile) {
+      const leaf = this.app.workspace.getLeaf(true);
+      await leaf.openFile(file);
+    }
   }
 }

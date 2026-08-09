@@ -46,5 +46,10 @@ export class ZincchirpView extends ItemView {
     dateInput.addEventListener("change", () => {
       this.model.setDayFromString(dateInput.value);
     });
+
+    const openFile = container.createEl("button", { text: "Open File" });
+    openFile.addEventListener("click", async () => {
+      await this.model.openFile();
+    });
   }
 }
